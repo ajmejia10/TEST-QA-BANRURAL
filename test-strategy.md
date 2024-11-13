@@ -9,3 +9,7 @@ No muestra ningun mensaje de alerta cuando se ingresa un dato contrario al numer
 Caso No. 3 
 Sí el número que ingresó el jugador es mayor al número a adivinar, se debe mostrar el siguiente mensaje en color negro: "Incorrecto! El número es mayor!", en caso que sea menor, se debe mostrar: "Incorrecto! El número es menor!".
 No muestra ningun mensaje, independientemente del dato ingresado
+
+Caso No. 4 
+Si después de 10 intentos, el usuario no adivina el número, se debe mostrarse el mensaje de color rojo: "!!!Pérdistes!!!":
+No realiza la sumatoria de los intentos, se pueden realizar mas de 10 intentos y no muestra dicho mensaje 
