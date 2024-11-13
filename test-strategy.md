@@ -12,4 +12,8 @@ No muestra ningun mensaje, independientemente del dato ingresado
 
 Caso No. 4 
 Si después de 10 intentos, el usuario no adivina el número, se debe mostrarse el mensaje de color rojo: "!!!Pérdistes!!!":
-No realiza la sumatoria de los intentos, se pueden realizar mas de 10 intentos y no muestra dicho mensaje 
+No realiza la sumatoria de los intentos, se pueden realizar mas de 10 intentos y no muestra dicho mensaje
+
+Caso No. 5
+Si el usuario adivina el número antes de los 10 intentos, se debe mostrar el mensaje de color verde: "Felicitaciones! adivinaste el número!".
+No muestra ningun mensaje, independientemente del dato ingresado 
