@@ -51,7 +51,9 @@
   const guessSubmit = document.querySelector('.guessSubmit');
   const guessField = document.querySelector('.guessField');
   
-  let randomNumber = Math.floor(Math.random() * 101);
+  let randomNumber = Math.floor(Math.random() * 101); // Número aleatorio entre 0 y 100
+  let guessCount = 0; // Contador de intentos
+  const maxGuesses = 10; // Máximo de intentos permitidos
   
    guessSubmit.addEventListener('click', checkGuess);
 
@@ -59,43 +61,39 @@
 //  let resetButton;
 
 
-  function checkGuess() {
+function checkGuess() {
+    // Convierte el valor ingresado a número
+    let userGuess = Number(guessField.value);
 
- // let userGuess = guessField.value;
-	let userGuess = Number(guessField.value);
-	
-/*    if(guessCount === 1) {
-      guesses.textContent = 'Número aleatorio anterior: ';
+    // Verifica que el valor ingresado sea válido (número entero no negativo y no mayor a 100)
+    if (!Number.isInteger(userGuess) || userGuess < 1 || userGuess > 100) {
+        lastResult.textContent = 'Por favor, ingresa un número entero entre 1 y 100.';
+        lastResult.style.backgroundColor = 'orange';
+        guessField.value = ''; // Limpia el campo de entrada
+        guessField.focus();
+        return; // Salir de la función si el número no es válido
     }
-    guesses.textContent += userGuess + ' ';
 
-    if(userGuess === randomNumber) {
-      lastResult.textContent = '!!!Pérdistes!!!';
-      lastResult.style.backgroundColor = 'black';
-      lowOrHi.textContent = '';
-      setGameOver();
-    } else if(guessCount === ATTEMPS) {
-      lastResult.textContent = 'Felicitaciones! adivinaste el número!';
-      lastResult.style.backgroundColor = 'red';
-      setGameOver();
-    } else {
-      lastResult.textContent = 'Incorrecto! ';
-      lastResult.style.backgroundColor = 'green';
-      if(userGuess < randomNumber) {
-        lowOrHi.textContent = 'El número es mayor!';
-      } else if(userGuess > randomNumber) {
-        lowOrHi.textContent = 'El número es menor!';
-      }
-    } */
-	   if (userGuess === randomNumber) {
+    // Incrementa el contador de intentos
+    guessCount++;
+
+    // Verifica si el número ingresado es correcto
+    if (userGuess === randomNumber) {
         lastResult.textContent = '¡Ganaste!';
         lastResult.style.backgroundColor = 'green';
         lowOrHi.textContent = '';
         setGameOver();
+    } else if (guessCount === maxGuesses) {
+        // Si se alcanzó el máximo de intentos sin acertar
+        lastResult.textContent = '¡Perdiste! Máximo de 10 intentos.';
+        lastResult.style.backgroundColor = 'red';
+        setGameOver();
     } else {
-        lastResult.textContent = 'Intento incorrecto';
+        // Si el intento es incorrecto y no ha alcanzado el límite
+        lastResult.textContent = `Intento ${guessCount} incorrecto`;
         lastResult.style.backgroundColor = 'red';
 
+        // Da una pista si el número es mayor o menor
         if (userGuess < randomNumber) {
             lowOrHi.textContent = '¡El número es mayor!';
         } else {
@@ -103,40 +101,37 @@
         }
     }
 
- //   guessCount++;
+    // Limpia el campo de entrada y lo enfoca para el próximo intento
     guessField.value = '';
     guessField.focus();
-  }
+}
 
   function setGameOver() {
-	  guessField.disabled = true;
-	  guessSubmit.disabled = true;
-	  
-	  const resetButton = document.createElement('button'); // se agrega boton para reinicio
-	  
-//	  resetButton = document.createElement('button');
-	  resetButton.textContent = 'Comienza un nuevo juego';
-	  document.body.appendChild(resetButton);
-	  resetButton.addeventListener('click', resetGame);
+    // Desactiva el campo de entrada y el botón de envío
+    guessField.disabled = true;
+    guessSubmit.disabled = true;
+
+    // Agrega un botón para reiniciar el juego
+    const resetButton = document.createElement('button');
+    resetButton.textContent = 'Jugar de nuevo';
+    document.body.appendChild(resetButton);
+    resetButton.addEventListener('click', resetGame);
   }
 
   function resetGame() {
-	  guessCount = 1;
+  
+  	guessField.disabled = false;
+	guessSubmit.disabled = false;
+	guessField.value = '';
+	guessField.focus();
+	  
+	lastResult.textContent = '';
+    lowOrHi.textContent = '';
+    lastResult.style.backgroundColor = '';
+	
+	randomNumber = Math.floor(Math.random() * 101);
+	guessCount = 0;
 
-	  const resetParas = document.querySelectorAll('.resultParas p');
-	  for(let i = 0; i < resetParas.length; i++) {
-		  resetParas[i].textContent = '';
-	  }
-	  resetButton.parentNode.removeChild(resetButton);
-
-	  guessField.disabled = false;
-	  guessSubmit.disabled = false;
-	  guessField.value = '';
-	  guessField.focus();
-
-	  lastResult.style.backgroundColor = 'white';
-
-	  randomNumber = Math.floor(Math.random()) + 1;
-  }
+}
 </script>
 </html>
